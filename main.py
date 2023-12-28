@@ -1,15 +1,12 @@
-from typing import Union
-
 from fastapi import FastAPI
+
+from routes.health import router as health
+from routes.submit import router as submit
 
 app = FastAPI()
 
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+app.include_router(health, tags=["헬스체크"])
+app.include_router(submit, tags=["코드제출"])
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+
